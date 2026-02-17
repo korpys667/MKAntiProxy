@@ -1,0 +1,7 @@
+enabled: true
+
+api:
+  url: "https://antiproxy.mkac.fun"
+  key: "MKAP_key"
+  timeout-ms: 5000
+  retry-attempts: 3

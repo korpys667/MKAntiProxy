@@ -1,0 +1,69 @@
+name: AutoBuild
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+    
+    - name: Build
+      run: chmod +x gradlew
+    
+    - name: Build
+      run: ./gradlew build shadowJar
+    
+    - name: Build
+      uses: actions/upload-artifact@v4
+      with:
+        name: MKAntiProxy
+        path: build/libs/*.jar
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+    
+    - name: Build
+      run: chmod +x gradlew
+    
+    - name: Build
+      run: ./gradlew build shadowJar
+    
+    - name: Get version
+      id: version
+      run: |
+        VERSION=$(./gradlew properties -q | grep "version:" | awk '{print $2}')
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+    
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: build/libs/*.jar
+        tag_name: v${{ steps.version.outputs.version }}
+        name: Release v${{ steps.version.outputs.version }}
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

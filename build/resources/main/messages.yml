@@ -1,0 +1,16 @@
+prefix: "&8[&c&lMK&f&lAntiProxy&8]&r"
+
+kick-message: |
+  §c§l╔═══════════════════════════════╗
+  §c§l║    §f§lДоступ запрещен!        §c§l║
+  §c§l╠═══════════════════════════════╣
+  §c§l║                               §c§l║
+  §f  Использование VPN/Proxy
+  §f  запрещено на этом сервере!
+  §c§l║                               §c§l║
+  §c§l╚═══════════════════════════════╝
+
+command:
+  no-permission: "{prefix} &cУ вас нет прав!"
+  reload-success: "{prefix} &aПерезагружено!"
+  usage: "{prefix} &cИспользование: &f/{command} reload"

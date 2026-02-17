@@ -1,0 +1,13 @@
+name: MKAntiProxy
+version: 'okak'
+main: ru.millyofficial.mkantiproxy.MKAntiProxy
+api-version: '1.16'
+
+commands:
+  mkantiproxy:
+    aliases: [mkap, antiproxy]
+    permission: mkantiproxy.admin
+
+permissions:
+  mkantiproxy.admin:
+    default: op
